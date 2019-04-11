@@ -1,0 +1,9 @@
+@import 'variables';
+@import 'prestream-ticker';
+
+body{
+  padding: 50px;
+  font: 14px $font;
+  font-weight: 900;
+}
+
