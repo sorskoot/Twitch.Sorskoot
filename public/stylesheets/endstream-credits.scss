@@ -1,0 +1,17 @@
+@keyframes credits {
+    0%   { transform: rotateY(40deg) translateY(500px);}
+
+    100% { transform: rotateY(40deg) translateY(-500px);}
+}
+
+#endstream-credits {
+    perspective: 1000px;
+    
+    .endstream-text {
+        transform: rotateY(40deg) translateY(500px);
+        color:green;
+        font-size: 1em;
+        animation: credits 30s normal;     
+        animation-timing-function: linear;
+    }
+}
