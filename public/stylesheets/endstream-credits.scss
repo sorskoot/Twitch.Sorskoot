@@ -1,17 +1,48 @@
 @keyframes credits {
-    0%   { transform: rotateY(40deg) translateY(500px);}
+    0%   { transform: rotateY(40deg) translateY(100vh);}
 
-    100% { transform: rotateY(40deg) translateY(-500px);}
+    100% { transform: rotateY(40deg) translateY(-130%);}
+    
 }
+body{
+    overflow: hidden;
+    background-color: black;
+}
+$text-outline-color:rgba(255, 255, 255, 0.1);
 
 #endstream-credits {
     perspective: 1000px;
-    
-    .endstream-text {
-        transform: rotateY(40deg) translateY(500px);
+    width:500px;
+    .default-message{
+        padding-bottom: 2em;
+    }
+    .endstream-text {        
+        transform: rotateY(40deg) translateY(120%);
         color:green;
+        text-shadow: -1px -1px 1px $text-outline-color, 
+                      1px -1px 1px $text-outline-color, 
+                      -1px 1px 1px $text-outline-color, 
+                      1px 1px 1px r$text-outline-color;
         font-size: 1em;
-        animation: credits 30s normal;     
+        animation: credits 30s infinite;     
         animation-timing-function: linear;
+        h2{
+            color:rgb(1, 173, 1);
+            font-style: italic
+        }
+        .user{
+            list-style: none;
+            padding-bottom: 0.2em;
+            font-size: 1.5em;   
+            display: flex;
+            align-items: center;         
+            .username{
+                line-height: 50px;
+                padding-left: 1em;
+            }
+            img{
+                width:50px;             
+            }
+        }
     }
 }

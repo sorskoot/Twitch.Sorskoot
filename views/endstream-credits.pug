@@ -3,9 +3,29 @@ extends layout
 block content
   #endstream-credits
     .endstream-text
-      h1 Special Thanks to:
-      h2 New Followers    
-        ul
-          each val in followers
-            li= val
+      h1.default-message
+        div Thanks a lot to everyone that has been watching! 
+        div Hope to see you again next time...      
+      if !nothing
+        h1 Special Thanks to:
+          if !!subscribers.length
+            h2 New Subscribers    
+            ul
+              each val in subscribers
+                include endstream-credits-template
+          if !!donators.length
+            h2 Donators  
+            ul
+              each val in donators
+                include endstream-credits-template
+          if !!followers.length
+            h2 New Followers    
+            ul
+              each val in followers
+                include endstream-credits-template
+          if !!hosts.length
+            h2 Hosts   
+            ul
+              each val in hosts
+                include endstream-credits-template
     
