@@ -1,0 +1,150 @@
+@keyframes fade {
+    from {
+      opacity: 0;
+      
+      
+    }
+   10%,90%{
+       opacity: 1;
+    }
+    to {
+      opacity: 0;
+      
+    }
+  }
+  
+  #notification {
+    font-family: 'Rasa';
+    font-size: 24px;
+    
+  }
+  
+  .notification-container{
+    animation-iteration-count: 1;
+    animation:fade 8s;
+     opacity: 0;
+  }
+  
+  .image-container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  #notification .image {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .subtitle {
+    font-size: 24px;
+    color: #FFFFFF;
+  }
+  
+  .video {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+  
+  .title {
+    color: #FFFFFF;
+  }
+  
+  @keyframes text {
+    0% {
+      opacity: 0;
+      transform: translateY(-50%) translateX(-50%) scale(.9);
+      
+    }
+   35%{
+      opacity: 1;
+       transform: translateY(-85%) translateX(-50%) scale(1);
+    }
+    65% {
+         opacity: 1;
+       transform: translateY(-115%) translateX(-50%) scale(1.05);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-150%) translateX(-50%) scale(1.1);
+    }
+  }
+  
+  .text-container {
+    position: absolute;
+    top: 250px;
+    width: 100%;
+    animation: text 8s;
+    text-align: center;
+    text-shadow: 0px 0px 1px #000000, 0px 0px 2px #000000, 0px 0px 3px #000000, 0px 0px 4px #000000, 0px 0px 5px #000000;
+    .title{
+      
+        font-size:2em;
+    }
+  }
+  
+  .tts {
+    display: none;
+  }
+  
+  .keyword:not(.user_message) {
+    color: #71ffb0;
+  }
+
+$fireColor: rgb(0,255,80);
+$fireColorM: rgba(13, 80, 27, 0.5);
+$fireColorT: rgba(255, 251, 0, 0);
+$dur: 1.5s;
+$blur: 0.02em;
+$fireRad: 3em;
+$parts: 50;
+$partSize: 8em;
+
+body {
+	background-color: #000;
+	margin: 0;
+}
+
+.fire {
+	font-size: 24px;
+	filter: blur($blur);
+	-webkit-filter: blur($blur);
+	margin: 3em auto 0 auto;
+	position: relative;
+	width: 30em;
+	height: 12em;
+}
+.particle {
+	animation: rise $dur ease-in 3;//infinite;
+	background-image: radial-gradient($fireColor 20%,$fireColorM 45%,$fireColorT 70%);
+	mix-blend-mode: screen;
+	opacity: 0;
+	position: absolute;
+	bottom: 0;
+	width: $partSize;
+	height: $partSize;
+	// spread particles out in time and x-position to get desired effect
+	@for $p from 1 through $parts {
+		&:nth-of-type(#{$p}) {
+			animation-delay: $dur * random();
+			left: calc((100% - #{$partSize}) * #{($p - 1)/$parts});
+		}
+	}
+}
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(0) scale(1);
+	}
+	25% {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-10em) scale(0);
+	}
+}
