@@ -7,7 +7,14 @@ const fs = require('fs');
 
 io.on('connection', function (socket) {
     console.log('an user connected');
+    socket.on('emotes in chat', (emotes)=>{        
+        io.emit('render emotes', emotes, {
+            for: 'everyone'
+        });
+    })
 });
+
+
 
 const {
     WebHook,
@@ -17,10 +24,11 @@ const {
 let twitchWebHook;
 let pubsub;
 
-startServer('https://rosiebot.localtunnel.me');
+//startServer('https://rosiebot.localtunnel.me');
 
 async function startServer(externalUrl) {
 
+   
     twitchWebHook = new WebHook({
         clientId: process.env.TWITCH_CLIENTID,
         callbackUrl: `${externalUrl}/webhook`

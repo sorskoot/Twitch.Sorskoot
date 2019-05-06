@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 var prestreamTickerRouter = require('./routes/prestream-ticker');
 var endstreamCreditsRouter = require('./routes/endstream-credits');
 var twitchCallbackRouter = require('./routes/twitch-callback');
-var alertRouter = require('./routes/alert');
+var defaultRouter = require('./routes/default');
 require('dotenv').config();
 
 var app = express();
@@ -28,12 +28,13 @@ app.use(sassMiddleware({
   indentedSyntax: false, // true = .sass and false = .scss
   sourceMap: true
 }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use('/prestream-ticker', prestreamTickerRouter);
 app.use('/endstream-credits', endstreamCreditsRouter);
 app.use('/webhook', twitchCallbackRouter);
-app.use('/alerts',alertRouter);
+app.use('/',defaultRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
