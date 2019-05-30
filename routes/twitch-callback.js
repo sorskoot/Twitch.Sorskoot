@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
+const request = require('request');
 
 var socketio = require('socket.io');
+var socketioClient = require('socket.io-client');
+
 let io = socketio(9385);
-const fs = require('fs');
 
 io.on('connection', function (socket) {
     console.log('an user connected');
-    socket.on('emotes in chat', (emotes)=>{        
+    socket.on('emotes in chat', (emotes) => {
         io.emit('render emotes', emotes, {
             for: 'everyone'
         });
@@ -25,50 +28,62 @@ let twitchWebHook;
 let pubsub;
 
 //startServer('https://rosiebot.localtunnel.me');
+const socketToken = process.env.STREAMLABS_SOCKET_TOKEN;
+const streamlabs = socketioClient(`https://sockets.streamlabs.com?token=${socketToken}`,
+    { transports: ['websocket'] });
 
-async function startServer(externalUrl) {
+const azureFunctionStoreURL = `https://twitchsorskoot.azurewebsites.net/api/twitchSorskoot?code=${process.env.FUNCTIONCODE}`
 
-   
-    twitchWebHook = new WebHook({
-        clientId: process.env.TWITCH_CLIENTID,
-        callbackUrl: `${externalUrl}/webhook`
-    });
-
-    twitchWebHook.topicUserFollowsSubscribe(null, 77504814).then(key => {
-        console.log(key);
-    }).catch(err => {
-        console.log(err);
-    })
-
-    twitchWebHook.on('user_follows', function (data) {
-        for (let i in data) {
-
-            // Broadcast 
-            io.emit('new follower', data[i], {
-                for: 'everyone'
-            });
-
-            console.log('New Follower with id ' + data[i]['from_id'] + ' ' + data[i]['from_name']);
+//Perform Action on event
+streamlabs.on('event', (eventData) => {
+    if (!eventData.for && eventData.type === 'donation') {
+        //code to handle donation events
+        console.log(eventData.message);
+    }
+    if (eventData.for === 'twitch_account') {
+        switch (eventData.type) {
+            case 'follow':
+                io.emit('new follower', { name: eventData.message[0].name }, {
+                    for: 'everyone'
+                });
+                break;
+            case 'subscription':
+                io.emit('new sub', { name: eventData.message[0].name }, {
+                    for: 'everyone'
+                });
+                break;
+            default:
+                //default case
+                console.log(eventData.message);
         }
-    });
+
+        let twitchEvent = eventData.message[0];
+        twitchEvent.type = eventData.type;
+        twitchEvent.PartitionKey = "TwitchEvent";
+        // {
+        //     "name":eventData.message[0].name,
+        //     "type": eventData.type,
+        //     "id":eventData.message[0]._id,
+        //     "isTest":eventData.message[0].isTest
+        // }
+        postDataToAzure(twitchEvent);
+
+    }
+});
+
+function postDataToAzure(data) {
+    request.post(azureFunctionStoreURL, {
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+    }, function (error, response, body) {
+        if (error) {
+            console.log(error.message);
+        }
+        if (response.statusCode != 200) {
+            console.log(response.body);
+        }
+    })
 }
-
-router.post('/', function (req, res) {
-    console.log('Receiving a POST request on /webhook');
-    let result = twitchWebHook.handleRequest(
-        'POST',
-        req.headers,
-        req.query,
-        req.body
-    );
-    res.sendStatus(result.status);
-})
-
-router.get('/', function (req, res) {
-    console.log('Receiving a GET request on /webhook');
-    let result = twitchWebHook.handleRequest('GET', req.headers, req.query);
-    res.status(result.status).send(result.data);
-})
 
 
 module.exports = router;

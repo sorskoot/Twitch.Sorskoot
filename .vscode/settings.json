@@ -1,3 +1,8 @@
 {
-    "vscode_custom_css.statusbar": false
+    "vscode_custom_css.statusbar": false,
+    "azureFunctions.deploySubpath": ".",
+    "azureFunctions.projectLanguage": "JavaScript",
+    "azureFunctions.projectRuntime": "~2",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "npm prune"
 }
