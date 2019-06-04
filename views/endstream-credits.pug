@@ -13,10 +13,15 @@ block content
             ul
               each val in subscribers
                 include endstream-credits-template
-          if !!donators.length
-            h2 Donators  
+          if !!bits.length
+            h2 Bits    
             ul
-              each val in donators
+              each val in bits
+                include endstream-credits-template
+          if !!donations.length
+            h2 Donations  
+            ul
+              each val in donations
                 include endstream-credits-template
           if !!followers.length
             h2 New Followers    
@@ -28,4 +33,10 @@ block content
             ul
               each val in hosts
                 include endstream-credits-template
+          if !!raids.length
+            h2 Raids   
+            ul
+              each val in raids
+                include endstream-credits-template
+
     

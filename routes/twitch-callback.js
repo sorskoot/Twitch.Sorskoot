@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const request = require('request');
 
 var socketio = require('socket.io');
@@ -17,17 +16,6 @@ io.on('connection', function (socket) {
     })
 });
 
-
-
-const {
-    WebHook,
-    PubSub
-} = require('twitch-toolkit');
-
-let twitchWebHook;
-let pubsub;
-
-//startServer('https://rosiebot.localtunnel.me');
 const socketToken = process.env.STREAMLABS_SOCKET_TOKEN;
 const streamlabs = socketioClient(`https://sockets.streamlabs.com?token=${socketToken}`,
     { transports: ['websocket'] });
@@ -60,14 +48,9 @@ streamlabs.on('event', (eventData) => {
         let twitchEvent = eventData.message[0];
         twitchEvent.type = eventData.type;
         twitchEvent.PartitionKey = "TwitchEvent";
-        // {
-        //     "name":eventData.message[0].name,
-        //     "type": eventData.type,
-        //     "id":eventData.message[0]._id,
-        //     "isTest":eventData.message[0].isTest
-        // }
-        postDataToAzure(twitchEvent);
+        twitchEvent.date = new Date();
 
+        postDataToAzure(twitchEvent);
     }
 });
 

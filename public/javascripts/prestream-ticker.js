@@ -7,11 +7,13 @@
         "We don't code bugs; only random features.",
         "Hey! It compiles! Ship it!",
         "Type !command for a list of commands.",
-        "!merch - 15% off when using GLOB15",
+        "We've got !merch",
         "We also have a !discord...",
         "Follow me on !twitter...",
         "// do not remove this comment.",
-        "I � Unicode!"        
+        "I � Unicode!",
+        "Make some noise with !sfx",
+        "Change the !light"
     ];
 
     let ticker = document.querySelector('.ticker-text');
