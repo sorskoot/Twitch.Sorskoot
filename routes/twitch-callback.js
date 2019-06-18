@@ -40,6 +40,14 @@ streamlabs.on('event', (eventData) => {
                     for: 'everyone'
                 });
                 break;
+            case 'raid':
+                    io.emit('new raid', 
+                    { name: eventData.message[0].name,
+                      raiders: eventData.message[0].raiders
+                     }, {
+                        for: 'everyone'
+                    });
+                    break;
             default:
                 //default case
                 console.log(eventData.message);
