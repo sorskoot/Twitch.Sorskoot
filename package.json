@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www --inspect",
+    "serve": "nodemon ./bin/www --inspect",
     "tunnel": "lt -s rosiebot --port 9384"
   },
   "dependencies": {

@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  #player-remote
+    div
+      button#player-remote-reload Reload
+      button#player-remote-play Play
+      button#player-remote-pause Pause
+      button#player-remote-next Next
+    div 
+      span Volume:
+      button#player-remote-vol-low Low 
+      button#player-remote-vol-med Med 
+      button#player-remote-vol-high High 
+
+block script
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js")
+  script(src="/javascripts/player-remote.js")

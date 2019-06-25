@@ -14,6 +14,12 @@ io.on('connection', function (socket) {
             for: 'everyone'
         });
     })
+    socket.on('player', (...msg) => {
+        msg.push({
+            for: 'everyone'
+        });
+        io.emit('player', ...msg);
+    })
 });
 
 const socketToken = process.env.STREAMLABS_SOCKET_TOKEN;
@@ -41,13 +47,14 @@ streamlabs.on('event', (eventData) => {
                 });
                 break;
             case 'raid':
-                    io.emit('new raid', 
-                    { name: eventData.message[0].name,
-                      raiders: eventData.message[0].raiders
-                     }, {
+                io.emit('new raid',
+                    {
+                        name: eventData.message[0].name,
+                        raiders: eventData.message[0].raiders
+                    }, {
                         for: 'everyone'
                     });
-                    break;
+                break;
             default:
                 //default case
                 console.log(eventData.message);

@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 var prestreamTickerRouter = require('./routes/prestream-ticker');
 var endstreamCreditsRouter = require('./routes/endstream-credits');
 var twitchCallbackRouter = require('./routes/twitch-callback');
+var playerRouter = require('./routes/player');
 var defaultRouter = require('./routes/default');
 require('dotenv').config();
 
@@ -34,6 +35,7 @@ app.use(bodyParser.json());
 app.use('/prestream-ticker', prestreamTickerRouter);
 app.use('/endstream-credits', endstreamCreditsRouter);
 app.use('/webhook', twitchCallbackRouter);
+app.use('/player',playerRouter)
 app.use('/',defaultRouter);
 
 // catch 404 and forward to error handler
