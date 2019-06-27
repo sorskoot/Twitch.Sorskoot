@@ -12,6 +12,7 @@
 
     let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     let analyser = audioCtx.createAnalyser();
+    
     let currentVolume = 1;
 
     analyser.connect(audioCtx.destination);
@@ -90,20 +91,7 @@
                 drawContext.shadowBlur = 4;
                 drawContext.shadowColor = `rgba(${hue},${hue / 8},${hue},15%)`;
                 drawContext.fillRect(i * barWidth + 2, (~~(offset / 16) * 16), barWidth - 4, 14);
-
-
-                // drawContext.fillStyle = `rgba(${hue},${hue / 5},${hue}, 25%)`;
-                // drawContext.fillRect(i * barWidth + 2, offset + 3, barWidth - 4, 2);
                 currentValue += stepsize;
-                //        analyser.frequencyBinCount
-                // let barWidth = 25;
-                // for (var i = 0; i < WIDTH; i += barWidth) {
-                //     var value = freqs[i];
-                //     var height = (value / 256);
-                //     var offset = HEIGHT - height;
-                //     //var barWidth = WIDTH / analyser.frequencyBinCount;
-                //     drawContext.fillStyle = 'white';
-                //     drawContext.fillRect(i, HEIGHT - offset, barWidth, offset);
             }
         }
 
@@ -181,7 +169,7 @@
     function createAudioElement(id) {
         const audioElement = document.createElement('audio');
         audioElement.controls = debug;
-        audioElement.volume = currentVolume / 100;
+        audioElement.volume = currentVolume;
         audioElement.dataset.id = id;
         audioElement.src = `/player/next-song?t=${new Date().getTime()}`;
         audioElement.preload = "auto";
