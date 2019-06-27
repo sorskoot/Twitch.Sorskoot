@@ -13,7 +13,7 @@
                 img.setAttribute('src', `https://static-cdn.jtvnw.net/emoticons/v1/${emote}/2.0`);
                 emotes.appendChild(img);
                 var $element = $(img);
-                explode($element, y, ~~(Math.random()*20)*20);
+                explode($element, y, ~~(Math.random()*50)*50);
             }
         }
     });
@@ -24,7 +24,7 @@
             $target.explode({
                 maxWidth: 15,
                 minWidth: 5,
-                radius: 231,
+                radius: 631,
                 release: true,
                 fadeTime:4,
                 recycle: false,
