@@ -18,16 +18,14 @@ $text-outline-color:rgba(255, 255, 255, 0.1);
     }
     .endstream-text {        
         transform: rotateY(40deg) translateY(120%);
-        color:green;
-        text-shadow: -1px -1px 1px $text-outline-color, 
-                      1px -1px 1px $text-outline-color, 
-                      -1px 1px 1px $text-outline-color, 
-                      1px 1px 1px r$text-outline-color;
+        color:rgb(250, 189, 250);
+        text-shadow: 0px 0px 4px rgb(173, 38, 173),
+                     0px 0px 8px rgb(78, 14, 78);
         font-size: 1em;
         animation: credits 30s infinite;     
         animation-timing-function: linear;
         h2{
-            color:rgb(1, 173, 1);
+            color:rgb(241, 124, 241);;
             font-style: italic
         }
         .user{

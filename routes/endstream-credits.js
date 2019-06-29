@@ -13,17 +13,18 @@ router.get('/', async function (req, res, next) {
 
     let credits = {};
 
-    credits.followers = twitchEvents.filter(x => x.type === 'follow').map(x => allUserinfo.find( a => a.display_name == x.name))
-    credits.subscribers = twitchEvents.filter(x => x.type === 'subscription').map(x => allUserinfo.find( a => a.display_name == x.name))
-    credits.hosts = twitchEvents.filter(x => x.type === 'host').map(x => allUserinfo.find( a => a.display_name == x.name))
-    credits.raids = twitchEvents.filter(x => x.type === 'raid').map(x => allUserinfo.find( a => a.display_name == x.name))
-    credits.donations = twitchEvents.filter(x => x.type === 'donation').map(x => allUserinfo.find( a => a.display_name == x.name));
-    credits.bits = twitchEvents.filter(x => x.type === 'bits').map(x => allUserinfo.find( a => a.display_name == x.name))
+    credits.followers = twitchEvents.filter(x => x.type === 'follow').map(x => allUserinfo.find( a => a.display_name.toLowerCase() === x.name.toLowerCase()))
+    credits.subscribers = twitchEvents.filter(x => x.type === 'subscription').map(x => allUserinfo.find( a => a.display_name.toLowerCase() === x.name.toLowerCase()))
+    credits.hosts = twitchEvents.filter(x => x.type === 'host').map(x => allUserinfo.find( a => a.display_name.toLowerCase() === x.name.toLowerCase()))
+    credits.raids = twitchEvents.filter(x => x.type === 'raid').map(x => allUserinfo.find( a => a.display_name.toLowerCase() === x.name.toLowerCase()))
+    credits.donations = twitchEvents.filter(x => x.type === 'donation').map(x => allUserinfo.find( a => a.display_name.toLowerCase() === x.name.toLowerCase()));
+    credits.bits = twitchEvents.filter(x => x.type === 'bits').map(x => allUserinfo.find( a => a.display_name.toLowerCase() === x.name.toLowerCase()))
 
     if (!credits.followers.length &&
         !credits.subscribers.length &&
         !credits.hosts.length &&
         !credits.bits.length &&
+        !credits.raids.length &&
         !credits.donations.length) {
         credits.nothing = true;
     }

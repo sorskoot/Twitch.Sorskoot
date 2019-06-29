@@ -23,11 +23,6 @@ block content
             ul
               each val in donations
                 include endstream-credits-template
-          if !!followers.length
-            h2 New Followers    
-            ul
-              each val in followers
-                include endstream-credits-template
           if !!hosts.length
             h2 Hosts   
             ul
@@ -38,5 +33,11 @@ block content
             ul
               each val in raids
                 include endstream-credits-template
+          if !!followers.length
+            h2 New Followers    
+            ul
+              each val in followers
+                include endstream-credits-template
+         
 
     
