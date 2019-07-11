@@ -7,21 +7,29 @@
 var app = require('../app');
 var debug = require('debug')('twitch.sorskoot:server');
 var http = require('http');
+var https = require('https');
+var fs = require('fs');
 
 require('dotenv').config();
 /**
  * Get port from environment and store in Express.
  */
+var options = {
+    key: fs.readFileSync(process.env.KEY_PATH),
+    cert: fs.readFileSync(process.env.PEM_PATH)
+  };
+  
+  
 
 var port = normalizePort(process.env.PORT || '3000');
+    
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
 
-var server = http.createServer(app);
-
+var server = https.createServer(options, app);
 /**
  * Listen on provided port, on all network interfaces.
  */
