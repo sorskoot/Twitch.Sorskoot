@@ -22,8 +22,8 @@
         $target.explodeRestore();
         setTimeout(function () {
             $target.explode({
-                maxWidth: 15,
-                minWidth: 5,
+                maxWidth: 25,
+                minWidth: 10,
                 radius: 631,
                 release: true,
                 fadeTime:4,
