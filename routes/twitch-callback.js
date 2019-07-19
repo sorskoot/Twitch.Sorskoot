@@ -32,10 +32,11 @@ let ids = [];
 
 //Perform Action on event
 streamlabs.on('event', (eventData) => {
-    
-    if(!!~ids.indexOf(eventData.id)) return; // ignore events with the same ID
-    ids.push(eventData.id); // store the event ID
 
+    if(eventData.type == "event"){
+        console.log(eventData.payload);
+        return;
+    }
     if (!eventData.for && eventData.type === 'donation') {
         //code to handle donation events
         console.log(eventData.message);
