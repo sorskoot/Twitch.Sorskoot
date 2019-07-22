@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
-
-var fs = require('fs');
+const express = require('express');
+const router = express.Router();
+const fs = require('fs');
 
 let files = [];
+let currensong = '';
+
 fs.readdir(process.env.MUSIC_PATH, (err,f)=>{
     if(!err){
         files = f.filter(x=>!!~x.toLowerCase().indexOf('.mp3'));
@@ -16,9 +17,17 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+router.get('/current-song',function(req, res, next) {
+    let split = currensong.split('-');
+    res.json({
+        artist: split[0].trim(),
+        title: split[1].trim()
+    })
+});
 
 router.get('/next-song',function(req, res, next) {
     const song = files[~~(Math.random() * files.length)];
+    currensong = song;
     // TODO:
     //
     let filePath = `${process.env.MUSIC_PATH}\\${song}`
