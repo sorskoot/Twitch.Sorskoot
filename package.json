@@ -25,5 +25,8 @@
     "socket.io-client": "^2.2.0",
     "twitch-toolkit": "0.0.10",
     "twitch-webhook": "^1.2.4"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.10.2"
   }
 }

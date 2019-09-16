@@ -1,0 +1,19 @@
+.fab {
+    font-family: 'fontawesome';
+    font-style: normal;
+}
+
+.social{
+    color:#ffaaff;
+    text-shadow: #ffd7ff 0 0 5px, #ffaaff 0 0 25px; 
+    font-size:2em;
+    position:absolute;
+    top:200px;
+    transition: top 0.5s cubic-bezier(0.4, 0, 1, 1);; 
+    & .name{
+        margin-left:20px;
+    }
+    &.active{
+        top:0px;
+    }
+}
