@@ -1,0 +1,36 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "table",
+      "direction": "in",
+      "name": "inputLoyaltyTable",
+      "tableName": "TwitchLoyalty",
+      "take": "5000",
+      "connection": "twitchsorskoot_STORAGE"
+    },
+    {
+      "type": "table",
+      "direction": "out",
+      "name": "outputLoyaltyTable",
+      "tableName": "TwitchLoyalty",
+      "rowKey": "{rand-guid}",
+      "partitionKey": "functions",
+      "connection": "twitchsorskoot_STORAGE"
+    }
+  ]
+}

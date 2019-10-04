@@ -5,9 +5,11 @@
   "scripts": {
     "start": "node ./bin/www --inspect",
     "serve": "nodemon ./bin/www --inspect",
-    "tunnel": "lt -s rosiebot --port 9384"
+    "tunnel": "lt -s rosiebot --port 9384",
+    "func": "func start"
   },
   "dependencies": {
+    "azure-storage": "^2.10.3",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
