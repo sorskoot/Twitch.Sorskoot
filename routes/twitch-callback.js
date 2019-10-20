@@ -20,6 +20,13 @@ io.on('connection', function (socket) {
         });
         io.emit('player', ...msg);
     })
+
+    socket.on('speak', (...msg) => {
+        msg.push({
+            for: 'everyone'
+        });
+        io.emit('speak', ...msg);
+    })
 });
 
 const socketToken = process.env.STREAMLABS_SOCKET_TOKEN;
