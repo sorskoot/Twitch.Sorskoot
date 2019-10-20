@@ -1,0 +1,16 @@
+extends layout
+
+block style
+  style(type='text/css').
+    .tts {
+        
+    }
+
+block content
+  #tts
+    .tts
+
+block script
+  script(src="lib/webaudio-buffer-loader.js")
+  script(src="lib/vocoder.js")
+  script(src="javascripts/tts.js")
