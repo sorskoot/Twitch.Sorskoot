@@ -35,11 +35,11 @@
 
 function vocoder(ctx, cb, mb) {
 
-    var modulatorGainValue = 1;//1.2;
+    var modulatorGainValue = 1.25;//1.2;
     var noiseGainValue = 0.1;//.23;
-    var carrierSampleGainValue = 0.4;//.5;
+    var carrierSampleGainValue = 1;//0.4;//.5;
     var oscillatorGainValue = .6;
-    var dryGainValue = .3;
+    var dryGainValue = 0.4;
     const oscillatorWaveType = 'sawtooth';
 
     var audioContext = null;
@@ -383,6 +383,7 @@ function vocoder(ctx, cb, mb) {
         noiseNode.connect(noiseGain);
 
         noiseGain.connect(output);
+     
         oscillatorNode.start(0);
         noiseNode.start(0);
         carrierSampleNode.start(0);
@@ -433,7 +434,7 @@ function vocoder(ctx, cb, mb) {
         audioContext = ctx;
         carrierBuffer = carrierB;
         modulatorBuffer = modulatorB;
-        generateVocoderBands(155, 7040, 48);
+        generateVocoderBands(155, 7040, 28);
         // Set up the vocoder chains
         setupVocoderGraph();
         vocode();
@@ -447,6 +448,7 @@ function vocoder(ctx, cb, mb) {
         modulatorGain: modulatorGain,
         synthLevel: oscillatorGain,
         noiseNode: noiseGain,
-        oscillatorNode: oscillatorNode
+        oscillatorNode: oscillatorNode,
+        vocode:vocode
     };
 }
