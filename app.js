@@ -11,6 +11,7 @@ var endstreamCreditsRouter = require('./routes/endstream-credits');
 var twitchCallbackRouter = require('./routes/twitch-callback');
 var playerRouter = require('./routes/player');
 var defaultRouter = require('./routes/default');
+var speechRouter = require('./routes/speech');
 require('dotenv').config();
 
 var app = express();
@@ -36,6 +37,7 @@ app.use('/prestream-ticker', prestreamTickerRouter);
 app.use('/endstream-credits', endstreamCreditsRouter);
 app.use('/webhook', twitchCallbackRouter);
 app.use('/player',playerRouter)
+app.use('/speech',speechRouter)
 app.use('/',defaultRouter);
 
 // catch 404 and forward to error handler

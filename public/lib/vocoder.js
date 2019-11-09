@@ -33,7 +33,7 @@
 
 // The code is heavily modified.
 
-function vocoder(ctx, cb, mb) {
+function vocoder() {
 
     var modulatorGainValue = 1.25;//1.2;
     var noiseGainValue = 0.1;//.23;
@@ -387,18 +387,20 @@ function vocoder(ctx, cb, mb) {
         oscillatorNode.start(0);
         noiseNode.start(0);
         carrierSampleNode.start(0);
-
     }
 
-    function vocode() {
+    function vocode(modulatorBuffer) {
         if (vocoding) {
+            return;
+        }
+        setTimeout(()=>{
             if (modulatorNode) {
                 modulatorNode.stop(0);
             }
             shutOffCarrier();
             vocoding = false;
             return;
-        }
+        }, modulatorBuffer.duration * 1000);
 
         createCarriersAndPlay(carrierInput);
 
@@ -430,25 +432,18 @@ function vocoder(ctx, cb, mb) {
     }
 
     // Initialization function for the page.
-    function init(ctx, carrierB, modulatorB) {
+    
+    function init(ctx, carrierB) {
         audioContext = ctx;
         carrierBuffer = carrierB;
-        modulatorBuffer = modulatorB;
+        //modulatorBuffer = modulatorB;
         generateVocoderBands(155, 7040, 28);
         // Set up the vocoder chains
         setupVocoderGraph();
-        vocode();
     }
 
-    // kick out the jams
-    init(ctx, cb, mb);
-
     return {
-        modulatorNode: modulatorNode,
-        modulatorGain: modulatorGain,
-        synthLevel: oscillatorGain,
-        noiseNode: noiseGain,
-        oscillatorNode: oscillatorNode,
+        init:init,
         vocode:vocode
     };
 }

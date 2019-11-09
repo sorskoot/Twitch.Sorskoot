@@ -29,6 +29,13 @@ io.on('connection', function (socket) {
     })
 });
 
+router.get('/tts-send/:message', (req, res) => {
+    io.emit('speak','text', req.params.message, {
+        for: 'everyone'
+    });
+    res.sendStatus(200);
+});
+
 const socketToken = process.env.STREAMLABS_SOCKET_TOKEN;
 const streamlabs = socketioClient(`https://sockets.streamlabs.com?token=${socketToken}`,
     { transports: ['websocket'] });

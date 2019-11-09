@@ -2,42 +2,49 @@ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 
-var grammar = '#JSGF V1.0; grammar rosie; public <rosie> = Hey | Rosie;'
-var recognition = new SpeechRecognition();
-var speechRecognitionList = new SpeechGrammarList();
+const grammar = '#JSGF V1.0; grammar rosie; public <rosie> = Hey | Rosie;'
+const recognition = new SpeechRecognition();
+const speechRecognitionList = new SpeechGrammarList();
+
+const wakeUpcommand = /^\s*(hey|hi) rosie$/i;
+
 speechRecognitionList.addFromString(grammar, 1);
 recognition.grammars = speechRecognitionList;
-
 recognition.continuous = true;
 recognition.lang = 'en-US';
-recognition.interimResults = false;
+recognition.interimResults = true;
 recognition.maxAlternatives = 1;
-
-var synth = window.speechSynthesis;
 
 // recognition.onaudioend= (e)=>console.log(e);
 // recognition.onaudiostart= (e)=>console.log(e);
- recognition.onerror = function(event) {
+recognition.onerror = function (event) {
     console.log(event.error);
 };;
-// recognition.onsoundend = (e)=>console.log(e);
-// recognition.onsoundstart = (e)=>console.log(e);
-// recognition.onspeechend = (e)=>console.log(e);
-// recognition.onspeechstart = (e)=>console.log(e);
-// recognition.onstart = (e)=>console.log(e);
-// recognition.continuous = (e)=>console.log(e);
+// recognition.onsoundend = (e) => console.log(e);
+// recognition.onsoundstart = (e) => console.log(e);
+// recognition.onspeechend = (e) => console.log(e);
+// recognition.onspeechstart = (e) => console.log(e);
+// recognition.onstart = (e) => console.log(e);
+// recognition.continuous = (e) => console.log(e);
 
-recognition.onresult = (e)=>{
-    console.log(speechSynthesis.getVoices());
-    let s = new SpeechSynthesisUtterance();
-    s.text='Yes, how can I help?'
-    s.voice = speechSynthesis.getVoices()[1];
-    s.pitch = 2;
-    s.rate = 1.2;
-    synth.speak(s);
-    console.log(e.results[0][0].transcript);
+let listening = false;
+
+recognition.onresult = (e) => {
+    const text = e.results[e.results.length - 1];
+    if (text.isFinal) {
+        if (text[0].transcript.match(wakeUpcommand)) {
+            fetch('https://twitch.c0dr.nl:9384/webhook/tts-send/Yes%3F');
+            listening = true;
+        } else {
+            if (listening) {
+                console.log(text.isFinal, text[0].transcript);
+                fetch(`/speech/api/${encodeURIComponent(text[0].transcript)}`);
+                listening = false;
+            }
+        }
+    }
+ 
 }
-
 
 recognition.onend = function () {
     recognition.start();
